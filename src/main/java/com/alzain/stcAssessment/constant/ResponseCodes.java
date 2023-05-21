@@ -6,8 +6,12 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 public class ResponseCodes {
-    @Value(Value = "عملية ناجحة")
+    @Value(Value = "success")
     public static final int SUCCESS = 200;
+    @Value(Value = "CREATED")
+    public static final int CREATED = 201;
+    @Value(Value = "File Already Exist")
+    public static final int ALREADY_EXIST = 300;
 
 
     public static String getDesc(int constantValue) {

@@ -1,5 +1,6 @@
 package com.alzain.stcAssessment.entity;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,7 +33,7 @@ public class Item {
     private MetaData metaDataId ;
 
     @OneToMany(mappedBy = "item")
-    List<ItemWUserPermission> ItemUser = new ArrayList<>();
+    List<ItemWUserPermission> ItemUserPermission = new ArrayList<>();
 
 
 }

@@ -1,7 +1,9 @@
 package com.alzain.stcAssessment.controller;
 
+import com.alzain.stcAssessment.dto.request.CreateFileRequest;
 import com.alzain.stcAssessment.dto.request.CreateSpaceRequest;
 import com.alzain.stcAssessment.dto.response.Response;
+import com.alzain.stcAssessment.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -11,54 +13,52 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 public class SystemDesignController {
+    public final FileService fileService ;
 
 
     @PostMapping("/create-space")
-    public Response createSpace(@RequestBody CreateSpaceRequest createSpaceRequest){
+    public @ResponseBody Response createSpace(@RequestBody CreateSpaceRequest createSpaceRequest){
 
         return null;
     }
 
     @PostMapping("/create-folder")
-    public Response createFolder(){
+    public @ResponseBody Response createFolder(){
         return null;
     }
     @PostMapping("/create-file")
-    public Response createFile(){
-        return null;
+    public @ResponseBody Response createFile(@RequestBody CreateFileRequest createFileRequest){
+        return fileService.createFile(createFileRequest);
     }
 
     @PutMapping("/modify-space")
-    public Response modifySpace(){
+    public @ResponseBody Response modifySpace(){
         return null;
     }
     @PutMapping("/modify-folder")
-    public Response modifyFolder(){
+    public @ResponseBody Response modifyFolder(){
         return null;
     }
     @PutMapping("/modify-file")
-    public Response modifyFile(){
+    public @ResponseBody Response modifyFile(){
         return null;
     }
     @GetMapping("/view-space")
-    public Response viewSpace(){
+    public @ResponseBody Response viewSpace(){
         return null;
     }
     @GetMapping("/view-folder")
-    public Response viewFolder(){
+    public @ResponseBody Response viewFolder(){
         return null;
     }
     @GetMapping("/view-file")
-    public Response viewFile(){
+    public @ResponseBody Response viewFile(){
         return null;
     }
 
     @PostMapping("/save-user")
-    public Response saveUser(){
+    public @ResponseBody Response saveUser(){
         return null;
     }
-
-
-
 
 }

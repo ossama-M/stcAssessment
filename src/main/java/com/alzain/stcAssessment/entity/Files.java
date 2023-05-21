@@ -18,7 +18,7 @@ public class Files {
     private long id ;
 
     @Lob
-    @Column(name = "file_Binary")
+    @Column(name = "file_Binary",length = 1000)
     private byte[] fileBinary;
 
     @OneToOne
@@ -27,5 +27,5 @@ public class Files {
             @JoinColumn(name = "folder", insertable = false, updatable = false),
             @JoinColumn(name = "file", insertable = false, updatable = false)
     })
-    private Item itemId;
+    private Item item;
 }
