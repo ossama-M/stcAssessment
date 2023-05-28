@@ -1,6 +1,15 @@
 package com.alzain.stcAssessment.dto.request;
 
-public class CreateSpaceRequest {
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@ToString
+
+public class CreateSpaceRequest {
+    private String space;
 
 }

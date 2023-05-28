@@ -1,5 +1,6 @@
 package com.alzain.stcAssessment.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,23 +16,20 @@ import javax.persistence.*;
 public class ItemWUserPermission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id  ;
+    private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private ServiceUser user ;
+    @JsonBackReference
+    private ServiceUser user;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumns({
-            @JoinColumn(name = "space", insertable = false, updatable = false),
-            @JoinColumn(name = "folder", insertable = false, updatable = false),
-            @JoinColumn(name = "file", insertable = false, updatable = false)
-    })
-    private Item item ;
+    @JoinColumn(name = "item_Id")
+    @JsonBackReference
+    private Item item;
 
     @Enumerated(EnumType.STRING)
-    private PermissionLevel operation ;
-
+    private PermissionLevel operation;
 
 
 }

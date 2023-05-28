@@ -1,7 +1,6 @@
 package com.alzain.stcAssessment.security.config;
 
 
-
 import com.alzain.stcAssessment.security.filter.CustomAuthenticationFilter;
 import com.alzain.stcAssessment.security.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig  extends WebSecurityConfigurerAdapter {
-    final private UserDetailsService userDetailsService ;
-    final private BCryptPasswordEncoder bCryptPasswordEncoder ;
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    final private UserDetailsService userDetailsService;
+    final private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
@@ -37,17 +36,17 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/stc-assessments/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/stc-assessments/login/**","/stc-assessments/token/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/stc-assessments/login/**", "/stc-assessments/token/refresh/**", "/h2/**").permitAll();
         http.authorizeRequests().antMatchers("/stc-assessments/**").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/stc-assessments/**").hasAnyRole("OWNER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/stc-assessments/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/stc-assessments/**").hasAnyRole("OWNER");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/stc-assessments/**").hasAnyRole("USER");
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean()throws Exception{
-        return super.authenticationManager() ;
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManager();
     }
 }

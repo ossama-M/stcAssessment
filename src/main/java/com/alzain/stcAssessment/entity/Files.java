@@ -15,17 +15,16 @@ import javax.persistence.*;
 public class Files {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id ;
+    private long id;
+
+    private String fileName;
 
     @Lob
-    @Column(name = "file_Binary",length = 1000)
+    @Column(name = "file_Binary", length = 1000)
     private byte[] fileBinary;
 
     @OneToOne
-    @JoinColumns({
-            @JoinColumn(name = "space", insertable = false, updatable = false),
-            @JoinColumn(name = "folder", insertable = false, updatable = false),
-            @JoinColumn(name = "file", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "location_id")
     private Item item;
+
 }

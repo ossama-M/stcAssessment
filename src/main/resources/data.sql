@@ -1,0 +1,1 @@
+insert into item (id, name, type, location_id) VALUES (1,'root','root',1);

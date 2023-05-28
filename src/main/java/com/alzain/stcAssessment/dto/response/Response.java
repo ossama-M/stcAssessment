@@ -12,6 +12,7 @@ import lombok.*;
 public class Response {
     private int responseCode;
     private String responseMessage;
+
     public Response(int responseCode) {
         this.responseCode = responseCode;
         this.responseMessage = ResponseCodes.getDesc(responseCode);

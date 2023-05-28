@@ -1,7 +1,6 @@
 package com.alzain.stcAssessment.security.service;
 
 import com.alzain.stcAssessment.entity.AppRole;
-import com.alzain.stcAssessment.entity.ItemWUserPermission;
 import com.alzain.stcAssessment.entity.ServiceUser;
 import com.alzain.stcAssessment.repo.RoleRepo;
 import com.alzain.stcAssessment.repo.ServiceUserRepo;
@@ -27,25 +26,26 @@ import java.util.Objects;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    final private RoleRepo roleRepo ;
+    final private RoleRepo roleRepo;
     final private ServiceUserRepo userRepo;
-    final private PasswordEncoder passwordEncoder ;
+    final private PasswordEncoder passwordEncoder;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ServiceUser appUser  = userRepo.findByUserEmail(username);
-        if (Objects.isNull(appUser)){
+        ServiceUser appUser = userRepo.findByUserEmail(username);
+        if (Objects.isNull(appUser)) {
             log.info("user not found in database");
             throw new UsernameNotFoundException("user not found in database");
-        }else{
-            log.info("user found in database {}",username);
+        } else {
+            log.info("user found in database {}", username);
         }
         Collection<SimpleGrantedAuthority> authourty = new ArrayList<>();
         appUser.getRoles().forEach(role -> authourty.add(new SimpleGrantedAuthority(role.getName())));
 
-        return new User(appUser.getUserEmail(),appUser.getPassword(),authourty) ;
+        return new User(appUser.getUserEmail(), appUser.getPassword(), authourty);
     }
+
     @Override
     public ServiceUser saveUser(ServiceUser user) {
         log.info("save user name to database ");
@@ -55,8 +55,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public AppRole saveRole(AppRole role) {
-        log.info("save Role  {} name to database ",role.getName());
-        return roleRepo.save(role);    }
+        log.info("save Role  {} name to database ", role.getName());
+        return roleRepo.save(role);
+    }
 
     @Override
     public void addRoleToUser(String userName, String roleName) {
@@ -67,7 +68,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public ServiceUser getUser(String userName) {
-        return userRepo.findByUserEmail(userName);    }
+        return userRepo.findByUserEmail(userName);
+    }
 
     @Override
     public List<ServiceUser> getUsers() {

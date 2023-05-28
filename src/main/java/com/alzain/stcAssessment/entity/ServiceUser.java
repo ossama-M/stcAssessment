@@ -16,15 +16,14 @@ import java.util.List;
 @Entity
 @Table
 public class ServiceUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id ;
-    private String userEmail ;
-    private String password ;
-
     @OneToMany(mappedBy = "user")
     List<ItemWUserPermission> userPermission = new ArrayList<>();
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @Column(name = "user_email", unique = true, columnDefinition = "varchar(100)")
+    private String userEmail;
+    private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> roles = new ArrayList<>();
 

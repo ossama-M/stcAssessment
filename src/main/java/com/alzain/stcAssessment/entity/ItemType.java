@@ -1,5 +1,5 @@
 package com.alzain.stcAssessment.entity;
 
 public enum ItemType {
-    space,folder,file
+    root, space, folder, file
 }

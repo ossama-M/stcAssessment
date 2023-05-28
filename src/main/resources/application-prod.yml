@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stc
+    username: postgres
+    password: password
+  sql:
+    init:
+      mode: always
+  jpa:
+    defer-datasource-initialization: true

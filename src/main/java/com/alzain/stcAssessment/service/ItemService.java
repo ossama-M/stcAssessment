@@ -1,8 +1,17 @@
 package com.alzain.stcAssessment.service;
 
-import org.springframework.stereotype.Service;
+import com.alzain.stcAssessment.dto.request.CreateFileRequest;
+import com.alzain.stcAssessment.dto.request.CreateFolderRequest;
+import com.alzain.stcAssessment.dto.request.CreateSpaceRequest;
+import com.alzain.stcAssessment.dto.response.Response;
 
-@Service
-public class ItemService {
+public interface ItemService {
+    Response createSpace(CreateSpaceRequest createSpaceRequest);
+
+    Response createFolder(CreateFolderRequest createFolderRequest);
+
+    Response createFile(CreateFileRequest createFileRequest);
+
+    void prepareRoot();
 
 }

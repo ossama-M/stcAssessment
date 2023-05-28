@@ -19,14 +19,13 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    final private AuthenticationManager authenticationManager ;
+    final private AuthenticationManager authenticationManager;
 
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -34,34 +33,36 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
+        String username = request.getParameter("user_email");
         String password = request.getParameter("password");
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
 
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        User user  = (User) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+
         String accessToken = JWT.create().
                 withSubject(user.getUsername()).
                 withIssuer(request.getRequestURI().toString()).
-                withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000)).
-                withClaim("roles",user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())).
+                withExpiresAt(new Date(System.currentTimeMillis() + 10000 * 60 * 1000)).
+                withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())).
                 sign(algorithm);
-        String  refreshToken= JWT.create().
+
+        String refreshToken = JWT.create().
                 withSubject(user.getUsername()).
-                withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000)).
+                withExpiresAt(new Date(System.currentTimeMillis() + 30000 * 60 * 1000)).
                 withIssuer(request.getRequestURI().toString()).sign(algorithm);
 //        response.setHeader("accessToken",accessToken);
 //        response.setHeader("refreshToken", refreshToken);
-        Map<String, String > tokens = new HashMap<>();
-        tokens.put("accessToken",accessToken);
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("accessToken", accessToken);
         tokens.put("refreshToken", refreshToken);
         response.setContentType(APPLICATION_JSON_VALUE);
-        new  ObjectMapper().writeValue(response.getOutputStream(),tokens);
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
 
     }

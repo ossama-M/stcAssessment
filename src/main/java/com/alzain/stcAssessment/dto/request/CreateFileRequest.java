@@ -2,13 +2,22 @@ package com.alzain.stcAssessment.dto.request;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
-public class CreateFileRequest {
-    private FileLocationBean location;
+public class CreateFileRequest implements Serializable {
+
     private byte[] fileBinary;
+
+    private String space;
+
+    private String folder;
+
+    private String file;
+
 }
